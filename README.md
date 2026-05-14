@@ -1,20 +1,20 @@
-![Workflow Status](https://github.com/mg0x7BE/repository-template/actions/workflows/dotnet.yml/badge.svg)
-![GitHub repo size](https://img.shields.io/github/repo-size/mg0x7BE/repository-template)
-![GitHub License](https://img.shields.io/github/license/mg0x7BE/repository-template)
-![GitHub Created At](https://img.shields.io/github/created-at/mg0x7BE/repository-template)
-![GitHub forks](https://img.shields.io/github/forks/mg0x7BE/repository-template)
-![GitHub Repo stars](https://img.shields.io/github/stars/mg0x7BE/repository-template)\
-![Windows](https://img.shields.io/badge/Windows-0078D6?logo=windows&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
-![macOS](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)
+![GitHub repo size](https://img.shields.io/github/repo-size/mg0x7BE/il-assembly-grammar)
+![GitHub License](https://img.shields.io/github/license/mg0x7BE/il-assembly-grammar)
+![GitHub Created At](https://img.shields.io/github/created-at/mg0x7BE/il-assembly-grammar)
+![GitHub forks](https://img.shields.io/github/forks/mg0x7BE/il-assembly-grammar)
+![GitHub Repo stars](https://img.shields.io/github/stars/mg0x7BE/il-assembly-grammar)
 
-# Repository Template
+# IL Assembly TextMate Grammar
 
-Template for new projects.
+TextMate grammar for .NET intermediate language (IL) assembly.
 
-## Usage
+## Coverage
 
-Select this template when creating a new repository.
+- Directives (`.assembly`, `.class`, `.method`, `.locals`, `.entrypoint`, ...)
+- CIL opcodes (load, store, arithmetic, conversion, branch, compare, object, stack, prefix)
+- Keywords and modifiers (`public`, `static`, `virtual`, `cil managed`, ...)
+- Built-in types (`void`, `int32`, `float64`, `string`, `object`, ...)
+- Strings, numbers, labels, byte arrays, assembly references
 
 ## License
 

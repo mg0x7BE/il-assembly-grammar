@@ -1,0 +1,145 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "IL Assembly",
+  "scopeName": "source.il",
+  "fileTypes": ["il"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#string-double" },
+    { "include": "#string-single" },
+    { "include": "#bytearray" },
+    { "include": "#directive" },
+    { "include": "#label" },
+    { "include": "#opcode-prefix" },
+    { "include": "#opcode-control" },
+    { "include": "#opcode" },
+    { "include": "#storage-modifier" },
+    { "include": "#type-builtin" },
+    { "include": "#number-hex" },
+    { "include": "#number-float" },
+    { "include": "#number-integer" },
+    { "include": "#assembly-ref" },
+    { "include": "#punctuation" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.double-slash.il",
+      "match": "//.*$"
+    },
+    "string-double": {
+      "name": "string.quoted.double.il",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.il" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.il" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.il",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "string-single": {
+      "name": "string.quoted.single.il",
+      "begin": "'",
+      "end": "'",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.il" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.il" }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.il",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "bytearray": {
+      "begin": "\\b(bytearray)\\s*(\\()",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.bytearray.il" },
+        "2": { "name": "punctuation.section.parens.begin.il" }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.parens.end.il" }
+      },
+      "patterns": [
+        { "include": "#comment" },
+        {
+          "name": "constant.numeric.hex.il",
+          "match": "[0-9a-fA-F]{2}"
+        }
+      ]
+    },
+    "directive": {
+      "name": "keyword.control.directive.il",
+      "match": "(?<![.\\w])\\.(assembly|module|class|namespace|method|field|property|event|custom|maxstack|locals|entrypoint|try|catch|finally|filter|fault|data|size|pack|override|param|permissionset|get|set|addon|removeon|fire|other|export|vtfixup|vtentry|zeroinit|emitbyte|corflags|subsystem|imagebase|stackreserve|file|hash|mresource|line|language|ctor|cctor|ver|publickey|publickeytoken|culture|locale)(?![.\\w])"
+    },
+    "label": {
+      "match": "^\\s*([A-Za-z_$][A-Za-z_$0-9]*)\\s*(:)(?!:)",
+      "captures": {
+        "1": { "name": "entity.name.label.il" },
+        "2": { "name": "punctuation.separator.label.il" }
+      }
+    },
+    "opcode-prefix": {
+      "name": "keyword.other.prefix.il",
+      "match": "(?<![.\\w])(?:tail|volatile|unaligned|readonly|constrained|no)\\."
+    },
+    "opcode-control": {
+      "name": "keyword.control.flow.il",
+      "match": "(?<![.\\w])(?:br(?:\\.s)?|brfalse(?:\\.s)?|brtrue(?:\\.s)?|beq(?:\\.s)?|bge(?:\\.(?:s|un(?:\\.s)?))?|bgt(?:\\.(?:s|un(?:\\.s)?))?|ble(?:\\.(?:s|un(?:\\.s)?))?|blt(?:\\.(?:s|un(?:\\.s)?))?|bne\\.un(?:\\.s)?|switch|call(?:i|virt)?|ret|jmp|throw|rethrow|leave(?:\\.s)?|endfinally|endfilter|endfault)(?![.\\w])"
+    },
+    "opcode": {
+      "name": "support.function.opcode.il",
+      "match": "(?<![.\\w])(?:ldarg(?:\\.[0-3s])?|ldarga(?:\\.s)?|ldloc(?:\\.[0-3s])?|ldloca(?:\\.s)?|ldc\\.i4(?:\\.(?:[0-8]|m1|s))?|ldc\\.(?:i8|r[48])|ldstr|ldnull|ldfld|ldsfld|ldflda|ldsflda|ldelem(?:\\.(?:i[1248]?|u[1248]|r[48]|ref))?|ldelema|ldlen|ldobj|ldftn|ldvirtftn|ldtoken|ldind\\.(?:i[1248]?|u[1248]|r[48]|ref)|starg(?:\\.s)?|stloc(?:\\.[0-3s])?|stfld|stsfld|stelem(?:\\.(?:i[1248]?|r[48]|ref))?|stobj|stind\\.(?:i[1248]?|r[48]|ref)|add(?:\\.ovf(?:\\.un)?)?|sub(?:\\.ovf(?:\\.un)?)?|mul(?:\\.ovf(?:\\.un)?)?|div(?:\\.un)?|rem(?:\\.un)?|neg|and|or|xor|not|shl|shr(?:\\.un)?|conv\\.(?:i[1248]?|u[1248]?|r[48]|r\\.un)|conv\\.ovf\\.(?:i[1248]?|u[1248]?)(?:\\.un)?|ceq|cgt(?:\\.un)?|clt(?:\\.un)?|ckfinite|newobj|newarr|initobj|castclass|isinst|box|unbox(?:\\.any)?|sizeof|mkrefany|refanytype|refanyval|pop|dup|nop|localloc|initblk|cpblk|cpobj|arglist|break)(?![.\\w])"
+    },
+    "storage-modifier": {
+      "name": "storage.modifier.il",
+      "match": "\\b(?:public|private|family|assembly|famorassem|famandassem|privatescope|compilercontrolled|static|instance|virtual|abstract|sealed|newslot|final|hidebysig|specialname|rtspecialname|pinvokeimpl|managed|unmanaged|cil|forwardref|noinlining|aggressiveinlining|synchronized|runtime|interface|enum|extends|implements|nested|sequential|explicit|auto|ansi|unicode|autochar|beforefieldinit|serializable|initonly|literal|notserialized|extern|init|marshal|in|out|opt|at|bytearray|nullref|vararg|default)\\b"
+    },
+    "type-builtin": {
+      "name": "support.type.il",
+      "match": "\\b(?:void|bool|char|int8|int16|int32|int64|float32|float64|native|unsigned|int|object|string|typedref|class|valuetype)\\b"
+    },
+    "number-hex": {
+      "name": "constant.numeric.hex.il",
+      "match": "\\b0[xX][0-9a-fA-F]+\\b"
+    },
+    "number-float": {
+      "name": "constant.numeric.float.il",
+      "match": "\\b[0-9]+\\.[0-9]+(?:[eE][+-]?[0-9]+)?\\b"
+    },
+    "number-integer": {
+      "name": "constant.numeric.integer.il",
+      "match": "\\b[0-9]+\\b"
+    },
+    "assembly-ref": {
+      "name": "entity.name.type.module.il",
+      "match": "\\[[A-Za-z_][\\w.]*\\]"
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.separator.accessor.il",
+          "match": "::"
+        },
+        {
+          "name": "punctuation.section.braces.begin.il",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.section.braces.end.il",
+          "match": "\\}"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "il-assembly-grammar",
+  "displayName": "IL Assembly",
+  "description": "TextMate grammar for .NET intermediate language (IL) assembly.",
+  "version": "0.1.0",
+  "license": "Unlicense",
+  "contributes": {
+    "languages": [
+      {
+        "id": "il",
+        "aliases": ["IL Assembly", "ILAsm", "CIL", "MSIL"],
+        "extensions": [".il"]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "il",
+        "scopeName": "source.il",
+        "path": "./syntaxes/il-assembly.tmLanguage.json"
+      }
+    ]
+  }
+}
