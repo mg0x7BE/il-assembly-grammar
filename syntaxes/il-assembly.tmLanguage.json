@@ -22,10 +22,12 @@
     { "include": "#punctuation" }
   ],
   "repository": {
+
     "comment": {
       "name": "comment.line.double-slash.il",
       "match": "//.*$"
     },
+
     "string-double": {
       "name": "string.quoted.double.il",
       "begin": "\"",
@@ -43,6 +45,7 @@
         }
       ]
     },
+
     "string-single": {
       "name": "string.quoted.single.il",
       "begin": "'",
@@ -60,6 +63,7 @@
         }
       ]
     },
+
     "bytearray": {
       "begin": "\\b(bytearray)\\s*(\\()",
       "beginCaptures": {
@@ -82,39 +86,28 @@
     "directive": {
       "patterns": [
         {
-          "comment": "Structure directives",
           "name": "keyword.control.directive.il",
-          "match": "(?<![.\\w])\\.(assembly|module|class|namespace|method|field|property|event)(?![.\\w])"
+          "match": "(?<![.\\w])\\.(assembly|module|class|namespace|method|field|property|event|custom)(?![.\\w])"
         },
         {
-          "comment": "Method body directives",
           "name": "keyword.control.directive.il",
-          "match": "(?<![.\\w])\\.(custom|maxstack|locals|entrypoint|try|catch|finally|filter|fault)(?![.\\w])"
+          "match": "(?<![.\\w])\\.(maxstack|locals|entrypoint|try|catch|finally|filter|fault|override)(?![.\\w])"
         },
         {
-          "comment": "Data & parameter directives",
           "name": "keyword.control.directive.il",
-          "match": "(?<![.\\w])\\.(data|size|pack|override|param|permissionset)(?![.\\w])"
+          "match": "(?<![.\\w])\\.(data|size|pack|param|permissionset|zeroinit|emitbyte)(?![.\\w])"
         },
         {
-          "comment": "Property/event accessor directives",
           "name": "keyword.control.directive.il",
           "match": "(?<![.\\w])\\.(get|set|addon|removeon|fire|other)(?![.\\w])"
         },
         {
-          "comment": "PE & assembly metadata directives",
           "name": "keyword.control.directive.il",
-          "match": "(?<![.\\w])\\.(export|vtfixup|vtentry|zeroinit|emitbyte|corflags|subsystem|imagebase|stackreserve)(?![.\\w])"
+          "match": "(?<![.\\w])\\.(export|vtfixup|vtentry|corflags|subsystem|imagebase|stackreserve|file|hash|mresource)(?![.\\w])"
         },
         {
-          "comment": "Resource & file directives",
           "name": "keyword.control.directive.il",
-          "match": "(?<![.\\w])\\.(file|hash|mresource|line|language)(?![.\\w])"
-        },
-        {
-          "comment": "Constructor & version directives",
-          "name": "keyword.control.directive.il",
-          "match": "(?<![.\\w])\\.(ctor|cctor|ver|publickey|publickeytoken|culture|locale)(?![.\\w])"
+          "match": "(?<![.\\w])\\.(line|language|ctor|cctor|ver|publickey|publickeytoken|culture|locale)(?![.\\w])"
         }
       ]
     },
@@ -135,34 +128,24 @@
     "opcode-control": {
       "patterns": [
         {
-          "comment": "Unconditional branch",
           "name": "keyword.control.flow.il",
-          "match": "(?<![.\\w])br(?:\\.s)?(?![.\\w])"
+          "match": "(?<![.\\w])(?:br|br\\.s|brfalse|brfalse\\.s|brtrue|brtrue\\.s)(?![.\\w])"
         },
         {
-          "comment": "Boolean branches",
           "name": "keyword.control.flow.il",
-          "match": "(?<![.\\w])(?:brfalse|brtrue)(?:\\.s)?(?![.\\w])"
+          "match": "(?<![.\\w])(?:beq|beq\\.s|bge|bge\\.s|bge\\.un|bge\\.un\\.s|bgt|bgt\\.s|bgt\\.un|bgt\\.un\\.s)(?![.\\w])"
         },
         {
-          "comment": "Comparison branches",
           "name": "keyword.control.flow.il",
-          "match": "(?<![.\\w])(?:beq|bge|bgt|ble|blt)(?:\\.(?:s|un(?:\\.s)?))?(?![.\\w])"
+          "match": "(?<![.\\w])(?:ble|ble\\.s|ble\\.un|ble\\.un\\.s|blt|blt\\.s|blt\\.un|blt\\.un\\.s|bne\\.un|bne\\.un\\.s)(?![.\\w])"
         },
         {
-          "comment": "Inequality branch",
           "name": "keyword.control.flow.il",
-          "match": "(?<![.\\w])bne\\.un(?:\\.s)?(?![.\\w])"
+          "match": "(?<![.\\w])(?:switch|call|calli|callvirt|ret|jmp)(?![.\\w])"
         },
         {
-          "comment": "Call, return & switch",
           "name": "keyword.control.flow.il",
-          "match": "(?<![.\\w])(?:switch|call(?:i|virt)?|ret|jmp|throw|rethrow)(?![.\\w])"
-        },
-        {
-          "comment": "Exception handling flow",
-          "name": "keyword.control.flow.il",
-          "match": "(?<![.\\w])(?:leave(?:\\.s)?|endfinally|endfilter|endfault)(?![.\\w])"
+          "match": "(?<![.\\w])(?:throw|rethrow|leave|leave\\.s|endfinally|endfilter|endfault)(?![.\\w])"
         }
       ]
     },
@@ -170,74 +153,64 @@
     "opcode": {
       "patterns": [
         {
-          "comment": "Load argument/local",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:ldarg(?:\\.[0-3s])?|ldarga(?:\\.s)?|ldloc(?:\\.[0-3s])?|ldloca(?:\\.s)?)(?![.\\w])"
+          "match": "(?<![.\\w])(?:ldarg|ldarg\\.[0-3s]|ldarga|ldarga\\.s|ldloc|ldloc\\.[0-3s]|ldloca|ldloca\\.s)(?![.\\w])"
         },
         {
-          "comment": "Load constant",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:ldc\\.i4(?:\\.(?:[0-8]|m1|s))?|ldc\\.(?:i8|r[48])|ldstr|ldnull)(?![.\\w])"
+          "match": "(?<![.\\w])(?:ldc\\.i4|ldc\\.i4\\.[0-8]|ldc\\.i4\\.m1|ldc\\.i4\\.s|ldc\\.i8|ldc\\.r4|ldc\\.r8|ldstr|ldnull)(?![.\\w])"
         },
         {
-          "comment": "Load field/element/object",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:ldfld|ldsfld|ldflda|ldsflda|ldelem(?:\\.(?:i[1248]?|u[1248]|r[48]|ref))?|ldelema|ldlen|ldobj)(?![.\\w])"
+          "match": "(?<![.\\w])(?:ldfld|ldsfld|ldflda|ldsflda|ldlen|ldobj|ldftn|ldvirtftn|ldtoken)(?![.\\w])"
         },
         {
-          "comment": "Load function pointer/token/indirect",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:ldftn|ldvirtftn|ldtoken|ldind\\.(?:i[1248]?|u[1248]|r[48]|ref))(?![.\\w])"
+          "match": "(?<![.\\w])(?:ldelem|ldelem\\.i[1248]?|ldelem\\.u[1248]|ldelem\\.r[48]|ldelem\\.ref|ldelema)(?![.\\w])"
         },
         {
-          "comment": "Store argument/local",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:starg(?:\\.s)?|stloc(?:\\.[0-3s])?)(?![.\\w])"
+          "match": "(?<![.\\w])(?:ldind\\.i[1248]?|ldind\\.u[1248]|ldind\\.r[48]|ldind\\.ref)(?![.\\w])"
         },
         {
-          "comment": "Store field/element/object/indirect",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:stfld|stsfld|stelem(?:\\.(?:i[1248]?|r[48]|ref))?|stobj|stind\\.(?:i[1248]?|r[48]|ref))(?![.\\w])"
+          "match": "(?<![.\\w])(?:starg|starg\\.s|stloc|stloc\\.[0-3s]|stfld|stsfld|stobj)(?![.\\w])"
         },
         {
-          "comment": "Arithmetic",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:add|sub|mul)(?:\\.ovf(?:\\.un)?)?(?![.\\w])"
+          "match": "(?<![.\\w])(?:stelem|stelem\\.i[1248]?|stelem\\.r[48]|stelem\\.ref)(?![.\\w])"
         },
         {
-          "comment": "Division/remainder/negation",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:div(?:\\.un)?|rem(?:\\.un)?|neg)(?![.\\w])"
+          "match": "(?<![.\\w])(?:stind\\.i[1248]?|stind\\.r[48]|stind\\.ref)(?![.\\w])"
         },
         {
-          "comment": "Bitwise & shift",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:and|or|xor|not|shl|shr(?:\\.un)?)(?![.\\w])"
+          "match": "(?<![.\\w])(?:add|add\\.ovf|add\\.ovf\\.un|sub|sub\\.ovf|sub\\.ovf\\.un|mul|mul\\.ovf|mul\\.ovf\\.un|div|div\\.un|rem|rem\\.un|neg)(?![.\\w])"
         },
         {
-          "comment": "Conversion",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:conv\\.(?:i[1248]?|u[1248]?|r[48]|r\\.un)|conv\\.ovf\\.(?:i[1248]?|u[1248]?)(?:\\.un)?)(?![.\\w])"
+          "match": "(?<![.\\w])(?:and|or|xor|not|shl|shr|shr\\.un)(?![.\\w])"
         },
         {
-          "comment": "Comparison",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:ceq|cgt(?:\\.un)?|clt(?:\\.un)?|ckfinite)(?![.\\w])"
+          "match": "(?<![.\\w])(?:conv\\.i[1248]?|conv\\.u[1248]?|conv\\.r[48]|conv\\.r\\.un)(?![.\\w])"
         },
         {
-          "comment": "Object model",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:newobj|newarr|initobj|castclass|isinst|box|unbox(?:\\.any)?|sizeof)(?![.\\w])"
+          "match": "(?<![.\\w])(?:conv\\.ovf\\.i[1248]?|conv\\.ovf\\.i[1248]?\\.un|conv\\.ovf\\.u[1248]?|conv\\.ovf\\.u[1248]?\\.un)(?![.\\w])"
         },
         {
-          "comment": "Typed reference",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:mkrefany|refanytype|refanyval)(?![.\\w])"
+          "match": "(?<![.\\w])(?:ceq|cgt|cgt\\.un|clt|clt\\.un|ckfinite)(?![.\\w])"
         },
         {
-          "comment": "Stack & misc",
           "name": "support.function.opcode.il",
-          "match": "(?<![.\\w])(?:pop|dup|nop|localloc|initblk|cpblk|cpobj|arglist|break)(?![.\\w])"
+          "match": "(?<![.\\w])(?:newobj|newarr|initobj|castclass|isinst|box|unbox|unbox\\.any|sizeof)(?![.\\w])"
+        },
+        {
+          "name": "support.function.opcode.il",
+          "match": "(?<![.\\w])(?:mkrefany|refanytype|refanyval|pop|dup|nop|localloc|initblk|cpblk|cpobj|arglist|break)(?![.\\w])"
         }
       ]
     },
@@ -245,44 +218,32 @@
     "storage-modifier": {
       "patterns": [
         {
-          "comment": "Access modifiers",
           "name": "storage.modifier.il",
           "match": "\\b(?:public|private|family|assembly|famorassem|famandassem|privatescope|compilercontrolled)\\b"
         },
         {
-          "comment": "Method modifiers",
           "name": "storage.modifier.il",
           "match": "\\b(?:static|instance|virtual|abstract|sealed|newslot|final|hidebysig)\\b"
         },
         {
-          "comment": "Special name & interop",
           "name": "storage.modifier.il",
-          "match": "\\b(?:specialname|rtspecialname|pinvokeimpl|managed|unmanaged)\\b"
+          "match": "\\b(?:specialname|rtspecialname|pinvokeimpl|managed|unmanaged|cil|runtime|internalcall)\\b"
         },
         {
-          "comment": "Implementation flags",
           "name": "storage.modifier.il",
-          "match": "\\b(?:cil|forwardref|noinlining|aggressiveinlining|synchronized|runtime)\\b"
+          "match": "\\b(?:forwardref|noinlining|aggressiveinlining|synchronized)\\b"
         },
         {
-          "comment": "Type modifiers",
           "name": "storage.modifier.il",
-          "match": "\\b(?:interface|enum|extends|implements|nested)\\b"
+          "match": "\\b(?:interface|enum|extends|implements|nested|sequential|explicit|auto)\\b"
         },
         {
-          "comment": "Layout & charset",
           "name": "storage.modifier.il",
-          "match": "\\b(?:sequential|explicit|auto|ansi|unicode|autochar)\\b"
+          "match": "\\b(?:ansi|unicode|autochar|beforefieldinit|serializable|initonly|literal|notserialized|extern)\\b"
         },
         {
-          "comment": "Field & misc modifiers",
           "name": "storage.modifier.il",
-          "match": "\\b(?:beforefieldinit|serializable|initonly|literal|notserialized|extern|init)\\b"
-        },
-        {
-          "comment": "Marshal & calling convention",
-          "name": "storage.modifier.il",
-          "match": "\\b(?:marshal|in|out|opt|at|bytearray|nullref|vararg|default)\\b"
+          "match": "\\b(?:init|marshal|modopt|modreq|in|out|opt|at|bytearray|nullref|vararg|default)\\b"
         }
       ]
     },
@@ -296,10 +257,12 @@
       "name": "constant.numeric.hex.il",
       "match": "\\b0[xX][0-9a-fA-F]+\\b"
     },
+
     "number-float": {
       "name": "constant.numeric.float.il",
       "match": "\\b[0-9]+\\.[0-9]+(?:[eE][+-]?[0-9]+)?\\b"
     },
+
     "number-integer": {
       "name": "constant.numeric.integer.il",
       "match": "\\b[0-9]+\\b"
