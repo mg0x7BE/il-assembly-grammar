@@ -6,7 +6,7 @@
 
 # IL Assembly TextMate Grammar
 
-TextMate grammar for .NET intermediate language (IL) assembly.
+TextMate grammar for .NET intermediate language (IL) assembly. Used as a submodule by [github-linguist/linguist](https://github.com/github-linguist/linguist) ([PR #7961](https://github.com/github-linguist/linguist/pull/7961)).
 
 ## Coverage
 
